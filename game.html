@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #field {
+            width: 1200px;
+            height: 100px;
+            border: 1px solid #000;
+            border-radius: 10px;
+            padding: 40px;
+            box-sizing: border-box;
+            display: table;
+            margin: 200px auto;
+        }
+
+        #field #wrapper {
+            font-size: 100px;
+            display: table-cell;
+            vertical-align: middle;
+            position: relative;
+        }
+
+        #road {
+            width: 100%;
+            border: 1px solid #000;
+        }
+
+        #person {
+            position: relative;
+            display: inline-block;
+        }
+
+        #weapon {
+            font-size: 5px;
+            width: 10px;
+            height: 100px;
+            /* background-color: #000; */
+            position: absolute;
+            transform-origin: bottom left;
+        }
+
+        #weapon.active {
+            animation: attack .2s;
+        }
+
+        .sword {
+            
+        }
+
+        @keyframes attack {
+            from{
+            }
+            to{
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="field">
+        <div id="wrapper">
+            <div id="person">人</div>
+            <div id="weapon">
+                剑
+                剑
+                剑
+                剑
+                剑
+                剑
+            </div>
+            <div id="road"></div>
+        </div>
+    </div>
+</body>
+<script>
+    let personLeft = person.getBoundingClientRect().left - wrapper.getBoundingClientRect().left
+    let personRight = person.getBoundingClientRect().right - wrapper.getBoundingClientRect().left
+    // 左右走路
+
+    initWeapon()
+
+    function initWeapon() {
+        weapon.style.left = personRight + 20 + 'px'
+        weapon.style.bottom = wrapper.offsetHeight / 2 + 'px'
+        weapon.classList.add()
+    }
+    
+    document.addEventListener('keydown', function (event) {
+        if (event.code == 'ArrowRight') {
+            moveTo(10)
+        }
+        if (event.code == 'ArrowLeft') {
+            moveTo(-10)
+        }
+        if (event.code == 'Space') {
+            attack()
+        }
+        function moveTo(gap) {
+            person.style.left = personLeft + gap + 'px'
+            weapon.style.left = personLeft + person.offsetWidth + 20 + gap + 'px'
+            personLeft = personLeft + gap
+        }
+
+        function attack() {
+            weapon.classList.add('active')
+            setTimeout(()=> {
+                weapon.classList.remove('active')
+            },500)
+            
+        }
+    })
+
+
+        ;
+</script>
+
+</html>
