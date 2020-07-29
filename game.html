@@ -47,15 +47,32 @@
             animation: attack .2s;
         }
 
-        .sword {
-            
+        #monster {
+            display: inline-block;
+            height: 100px;
+            position: relative;
+            left: 200px;
         }
 
+        #monster.hurt {
+            animation: hurt .5s;
+        }
+
+        .sword {}
+
         @keyframes attack {
-            from{
-            }
-            to{
+            from {}
+
+            to {
                 transform: rotate(90deg);
+            }
+        }
+
+        @keyframes hurt {
+            from {}
+
+            to {
+                transform: translateX(10px);
             }
         }
     </style>
@@ -73,6 +90,7 @@
                 剑
                 剑
             </div>
+            <div id="monster">怪兽</div>
             <div id="road"></div>
         </div>
     </div>
@@ -85,11 +103,11 @@
     initWeapon()
 
     function initWeapon() {
-        weapon.style.left = personRight + 20 + 'px'
+        weapon.style.left = personRight + 'px'
         weapon.style.bottom = wrapper.offsetHeight / 2 + 'px'
         weapon.classList.add()
     }
-    
+
     document.addEventListener('keydown', function (event) {
         if (event.code == 'ArrowRight') {
             moveTo(10)
@@ -102,16 +120,22 @@
         }
         function moveTo(gap) {
             person.style.left = personLeft + gap + 'px'
-            weapon.style.left = personLeft + person.offsetWidth + 20 + gap + 'px'
+            weapon.style.left = personLeft + person.offsetWidth + gap + 'px'
             personLeft = personLeft + gap
         }
 
         function attack() {
             weapon.classList.add('active')
-            setTimeout(()=> {
+            setTimeout(() => {
                 weapon.classList.remove('active')
-            },500)
-            
+            }, 500)
+            let attackArea = personRight + person.getBoundingClientRect().left + weapon.offsetHeight
+            if (attackArea > monster.getBoundingClientRect().left) {
+                monster.classList.add('hurt')
+                setTimeout(() => {
+                    monster.classList.remove('hurt')
+                }, 500)
+            }
         }
     })
 
